@@ -6,6 +6,7 @@ const userSchema = new Schema({
     fullName: {
         type: String,
         required: [true, 'Please Enter the full name'],
+        unique : false
 
     },
     username: {

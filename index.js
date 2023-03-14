@@ -4,6 +4,7 @@ import authRoutes from './routes/authRoutes.js'
 import { connectDB } from './config/db.js'
 import bodyParser from 'body-parser'
 import { error } from './middleware/error.js'
+import cookieParser from 'cookie-parser'
 
 
 const app = express()
@@ -11,6 +12,7 @@ const app = express()
 connectDB();
 
 app.use(bodyParser.json())
+app.use(cookieParser())
 
 app.use('/v1', todoRoutes)
 
