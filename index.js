@@ -5,12 +5,13 @@ import { connectDB } from './config/db.js'
 import bodyParser from 'body-parser'
 import { error } from './middleware/error.js'
 import cookieParser from 'cookie-parser'
+import cors from 'cors'
 
 
 const app = express()
 
 connectDB();
-
+app.use(cors())
 app.use(bodyParser.json())
 app.use(cookieParser())
 
