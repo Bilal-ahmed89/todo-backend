@@ -11,9 +11,9 @@ router.route('/todo/:id').get(isAuthenticatedUser, getTodoById);
 
 router.route('/todo/update/:id').put(isAuthenticatedUser, updateTodo);
 
-router.route('/todo/delete/:id').delete(isAuthenticatedUser, deleteTodo);
+router.route('/todo/delete/:id').delete(deleteTodo);
 
-router.route('/todo/new').post(isAuthenticatedUser, isAuthorizedUser("admin", "teacher"), addTodo);
+router.route('/todo/new').post(addTodo);
 
 
 export default router;
