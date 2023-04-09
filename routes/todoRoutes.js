@@ -5,11 +5,11 @@ const router = express.Router();
 
 
 
-router.route('/todos').get( getAllTodos);
+router.route('/todos').get(getAllTodos);
 
-router.route('/todo/:id').get( getTodoById);
+router.route('/todo/:id').get(getTodoById);
 
-router.route('/todo/update/:id').put(isAuthenticatedUser, updateTodo);
+router.route('/todo/update/:id').put(updateTodo);
 
 router.route('/todo/delete/:id').delete(deleteTodo);
 

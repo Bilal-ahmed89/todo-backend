@@ -4,9 +4,47 @@ import { Todo } from "../model/todoSchema.js"
 
 export const getAllTodos = async (req, res) => {
 
-    const todos = await Todo.find()
 
-    res.json({ todos: todos })
+    const page = parseInt(req.query.page) - 1 || 0;
+    const limit = parseInt(req.query.limit) || 5;
+    const search = req.query.search || "";
+
+    let sort = req.query.sort || "_id"
+
+    req.query.sort ? (sort=req.query.sort.split(",")) : (sort[sort])
+
+    let sortBy = {};
+
+    if(sort[1]){
+        sortBy[sort[0]] = sort[1]
+    }else{
+        sortBy[sort[0]] = "asc"
+    }
+
+    let todos = await Todo.find({
+
+        "$or": [
+            { title: { $regex: search, $options: "i" } },
+            { body: { $regex: search, $options: "i" } }
+        ]
+    })
+    .skip(page * limit)
+    .limit(limit)
+
+
+    let total = await Todo.countDocuments({ title: { $regex: search, $options: "i" } })
+
+    let pageCount = Math.ceil(total / limit)
+
+
+
+    res.json({
+        todos,
+        total,
+        page: page + 1,
+        limit,
+        pageCount
+    })
 }
 
 export const getTodoById = async (req, res, next) => {
@@ -21,7 +59,7 @@ export const getTodoById = async (req, res, next) => {
                 todo
             })
         }
-        
+
     } catch (err) {
         next(err)
     }
@@ -54,7 +92,7 @@ export const addTodo = async (req, res, next) => {
         await Todo.create(todo)
         res.json({ message: "Todo has been added" })
     }
-     catch (err) {
+    catch (err) {
         next(err)
     }
 
