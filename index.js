@@ -26,5 +26,5 @@ app.use(error)
 const port = 10000;
 
 app.listen(port, () => {
-    console.log(`server is in listening mode ${port}`)
+    console.log(`server  is in listening mode ${port}`)
 });
